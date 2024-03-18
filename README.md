@@ -24,7 +24,7 @@ Sistema para gestão de produtos
 Clone o projeto
 
 ```bash
-  git clone https://github.com/renatofreitasRR/PortfolioInvestimentos.git
+  git clone https://github.com/renatofreitasRR/GestaoProdutos.git
 ```
 
 Abra o Projeto com o Visual Studio
@@ -45,7 +45,6 @@ Inicie o servidor
 | `Id`      | `int` |Código do Produto|
 | `Description`      | `string` |Descrição do produto|
 | `IsActive`      | `bool` | Produto está ou não ativo |
-| `QuantityAvailable`      | `int` |Quantidade disponível |
 | `DueDate`      | `DateTimme` | Data de Vencimento|
 | `ManufacturingDate`      | `DateTime` |Data da Fabricação do Produto|
 | `SupplierCode`      | `string` |Código do Fornecedor|
@@ -81,21 +80,32 @@ Inicie o servidor
 
 ### Products
 
-#### Retorna todos os produtos
-Acesso: Manager, Client
+#### Retorna todos os produtos ativos
 
 ```http
-  GET /api/Product/GetAllPaged
+  GET /api/Product/GetAllActivePaged
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |
 | `PageNumber`      | `int` |  Número da página |
 | `PageSize`      | `int` |  Quantidade de elementos a serem retornados |
+| `Search`      | `string` |  Campo de busca por descrição do produto |
+
+#### Retorna todos os produtos ativos
+
+```http
+  GET /api/Product/GetAllInactivePaged
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `PageNumber`      | `int` |  Número da página |
+| `PageSize`      | `int` |  Quantidade de elementos a serem retornados |
+| `Search`      | `string` |  Campo de busca por descrição do produto |
 
 
 #### Retorna um produto
-Acesso: Manager, Client
 
 ```http
   GET /api/Product/GetById/${id}
@@ -103,24 +113,24 @@ Acesso: Manager, Client
 
 | Parâmetro   | Tipo       | Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `id`      | `string` | **Obrigatório**. O ID do produto |
+| `id`      | `int` | **Obrigatório**. O ID do produto |
 
 #### Criar um Produto
-Acesso: Manager
+
 ```http
   POST /api/Product/Post
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `Name`      | `string` | **Obrigatório**. Nome do produto|
-| `Type`      | `ProductType` | **Obrigatório**. Tipo do produto |
-| `Value`      | `decimal` | **Obrigatório**. Valor do produto |
-| `QuantityAvailable`      | `int` | **Obrigatório**. Quantidade disponível |
-| `DueDate`      | `DateTimme` | **Obrigatório**.  Data de Vencimento|
+| `Description`      | `string` |**Obrigatório** Descrição do produto|
+| `DueDate`      | `DateTimme` | Data de Vencimento|
+| `ManufacturingDate`      | `DateTime` |Data da Fabricação do Produto|
+| `SupplierCode`      | `string` |Código do Fornecedor|
+| `SupplierDescription`      | `string` |Descrição do Fornecedor|
+| `SupplierDocument`      | `string` |CNPJ do Fornecedor|
 
 #### Editar um Produto
-Acesso: Manager
 
 ```http
   PUT /api/Product/Put
@@ -128,13 +138,35 @@ Acesso: Manager
 
 | Parâmetro   | Tipo       | Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `Id`      | `int` | **Obrigatório**. Id do Produto|
-| `Name`      | `string` | **Obrigatório**. Nome do produto|
-| `Type`      | `ProductType` | **Obrigatório**. Tipo do produto |
-| `Value`      | `decimal` | **Obrigatório**. Valor do produto |
-| `QuantityAvailable`      | `int` | **Obrigatório**. Quantidade disponível |
-| `DueDate`      | `DateTimme` | **Obrigatório**.  Data de Vencimento|
-| `IsActive`      | `bool` | **Obrigatório**.  Produto está ativo|
+| `id`      | `int` | **Obrigatório**. O ID do produto |
+| `Description`      | `string` |**Obrigatório** Descrição do produto|
+| `DueDate`      | `DateTimme` | Data de Vencimento|
+| `ManufacturingDate`      | `DateTime` |Data da Fabricação do Produto|
+| `SupplierCode`      | `string` |Código do Fornecedor|
+| `SupplierDescription`      | `string` |Descrição do Fornecedor|
+| `SupplierDocument`      | `string` |CNPJ do Fornecedor|
+
+
+#### Ativar um Produto
+
+```http
+  PATCH /api/Product/ActiveProduct
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `int` | **Obrigatório**. O ID do produto |
+
+
+#### Desativar um Produto
+
+```http
+  PATCH /api/Product/InactiveProduct
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `int` | **Obrigatório**. O ID do produto |
 
 
 
